@@ -11,7 +11,7 @@ import { authService } from '../../services/auth.service';
 import colors from '../../theme/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Snackbar, Surface } from 'react-native-paper';
- 
+
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
   password: yup.string().required('Password is required'),
@@ -21,7 +21,7 @@ export default function LoginScreen({ navigation }: any) {
   const dispatch = useDispatch();
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  
+
   const { control, handleSubmit, formState: { isSubmitting } } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { email: '', password: '' },
@@ -41,19 +41,19 @@ export default function LoginScreen({ navigation }: any) {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
-  
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>Log in</Text>
-          
-          <Input control={control} name="email" label="Email" keyboardType="email-address" />
-          <Input control={control} name="password" label="Password" secureTextEntry />
-          
-          <Button title="Login" onPress={handleSubmit(onSubmit)} loading={isSubmitting} style={styles.button} />
-          
-          <TouchableOpacity onPress={() => navigation.navigate('Signup')} style={styles.link}>
-            <Text style={styles.linkText}>Don't have an account? <Text style={styles.linkTextBold}>Sign Up</Text></Text>
-          </TouchableOpacity>
-       </KeyboardAvoidingView>
+
+        <Text style={styles.title}>Welcome Back </Text>
+        <Text style={styles.subtitle}>Login to your account</Text>
+
+        <Input control={control} name="email" label="Email" keyboardType="email-address" />
+        <Input control={control} name="password" label="Password" secureTextEntry />
+
+        <Button title="Login" onPress={handleSubmit(onSubmit)} loading={isSubmitting} style={styles.button} />
+
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')} style={styles.link}>
+          <Text style={styles.linkText}>Don't have an account? <Text style={styles.linkTextBold}>Sign Up</Text></Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
 
       <Snackbar
         visible={snackbarVisible}

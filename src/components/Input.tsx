@@ -13,6 +13,8 @@ interface InputProps {
 }
 
 export const Input: React.FC<InputProps> = ({ name, control, label, secureTextEntry, keyboardType }) => {
+  const [isSecure, setIsSecure] = React.useState(secureTextEntry);
+
   return (
     <Controller
       control={control}
@@ -24,13 +26,14 @@ export const Input: React.FC<InputProps> = ({ name, control, label, secureTextEn
             value={value}
             onChangeText={onChange}
             onBlur={onBlur}
-            secureTextEntry={secureTextEntry}
+            secureTextEntry={isSecure}
             keyboardType={keyboardType}
             mode="outlined"
             outlineColor={colors.border}
             activeOutlineColor={colors.primary}
             style={styles.input}
             error={!!error}
+            right={secureTextEntry ? <TextInput.Icon icon={isSecure ? "eye-off" : "eye"} onPress={() => setIsSecure(!isSecure)} /> : undefined}
           />
           {error && <Text style={styles.errorText}>{error.message}</Text>}
         </View>
