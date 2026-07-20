@@ -7,6 +7,7 @@ interface AppStatusBarProps {
   translucent?: boolean;
 }
 
+
 const AppStatusBar = ({
   barStyle = 'dark-content',
   backgroundColor = '#FFFFFF',
