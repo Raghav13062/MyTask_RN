@@ -56,6 +56,14 @@ const cartSlice = createSlice({
       state.totalPrice = 0;
     },
   },
+  extraReducers: (builder) => {
+    // Clear cart automatically when user logs out
+    builder.addCase('auth/logout', (state) => {
+      state.items = [];
+      state.totalQuantity = 0;
+      state.totalPrice = 0;
+    });
+  },
 });
 
 export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
