@@ -1,15 +1,11 @@
 import { Model } from '@nozbe/watermelondb';
-import { field, text, date, relation, children } from '@nozbe/watermelondb/decorators';
-import Vendor from './Vendor';
-import Product from './Product';
+import { text, date, readonly } from '@nozbe/watermelondb/decorators';
 
 export default class Project extends Model {
   static table = 'projects';
 
+  @text('vendor_id') vendorId!: string;
   @text('project_name') projectName!: string;
-  @text('description') description!: string;
-  @date('created_at') createdAt!: number;
-
-  @relation('vendors', 'vendor_id') vendor!: any;
-  @children('products') products!: any;
+  @text('description') description?: string;
+  @readonly @date('created_at') createdAt!: Date;
 }

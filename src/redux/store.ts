@@ -7,6 +7,7 @@ import vendorReducer from './vendor/vendorSlice';
 import projectReducer from './project/projectSlice';
 import productReducer from './product/productSlice';
 import dashboardReducer from './dashboard/dashboardSlice';
+import cartReducer from './cart/cartSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,12 +15,13 @@ const rootReducer = combineReducers({
   project: projectReducer,
   product: productReducer,
   dashboard: dashboardReducer,
+  cart: cartReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['auth'], // Only persist auth state
+  whitelist: ['auth', 'cart'], // Persist auth and cart offline
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

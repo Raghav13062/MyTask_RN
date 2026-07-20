@@ -1,6 +1,5 @@
 import { Model } from '@nozbe/watermelondb';
-import { field, text, children } from '@nozbe/watermelondb/decorators';
-import Vendor from './Vendor';
+import { text } from '@nozbe/watermelondb/decorators';
 
 export default class User extends Model {
   static table = 'users';
@@ -8,6 +7,4 @@ export default class User extends Model {
   @text('name') name!: string;
   @text('email') email!: string;
   @text('password') password!: string;
-
-  @children('vendors') vendors!: any;
 }
