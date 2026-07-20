@@ -202,23 +202,7 @@ export default function HomeScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
       
-      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Cart')}>
-        <Surface style={styles.cartSummary} >
-          <View style={styles.cartIconContainer}>
-            <Icon name="cart-outline" size={28} color={colors.primary} />
-            {totalQuantity > 0 && (
-              <View style={styles.cartBadge}>
-                <Text style={styles.cartBadgeText}>{totalQuantity}</Text>
-              </View>
-            )}
-          </View>
-          <View style={styles.cartDetails}>
-            <Text style={styles.cartTotalText}>Total Cart Value</Text>
-            <Text style={styles.cartPriceText}>₹{totalPrice.toLocaleString('en-IN')}</Text>
-          </View>
-          <Icon name="chevron-right" size={24} color={colors.textSecondary} />
-        </Surface>
-      </TouchableOpacity>
+     
 
       <ScrollView style={styles.container}>
      
@@ -288,6 +272,25 @@ export default function HomeScreen({ navigation }: any) {
         </View>
         <View style={{ height: 40 }} />
       </ScrollView>
+       <TouchableOpacity
+       
+       activeOpacity={0.8} onPress={() => navigation.navigate('Cart')}>
+        <Surface style={styles.cartSummary} >
+          <View style={styles.cartIconContainer}>
+            <Icon name="cart-outline" size={28} color={colors.primary} />
+            {totalQuantity > 0 && (
+              <View style={styles.cartBadge}>
+                <Text style={styles.cartBadgeText}>{totalQuantity}</Text>
+              </View>
+            )}
+          </View>
+          <View style={styles.cartDetails}>
+            <Text style={styles.cartTotalText}>Total Cart Value</Text>
+            <Text style={styles.cartPriceText}>₹{totalPrice.toLocaleString('en-IN')}</Text>
+          </View>
+          <Icon name="chevron-right" size={24} color={colors.textSecondary} />
+        </Surface>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -325,10 +328,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
+    marginHorizontal:15,
+    borderRadius:55,
   },
   cartIconContainer: {
     position: 'relative',
-    marginRight: 15,
+    marginRight: 18,
   },
   cartBadge: {
     position: 'absolute',
@@ -343,7 +348,7 @@ const styles = StyleSheet.create({
   },
   cartBadgeText: {
     color: colors.white,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'bold',
   },
   cartDetails: {
