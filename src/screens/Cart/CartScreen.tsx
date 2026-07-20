@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Surface, Button as PaperButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppStatusBar from '@/components/AppStatusBar';
+import { notificationService } from '../../services/notification.service';
 
 export default function CartScreen({ navigation }: any) {
   const dispatch = useDispatch();
@@ -100,8 +101,19 @@ export default function CartScreen({ navigation }: any) {
           mode="contained" 
           buttonColor={colors.secondary} 
           style={styles.checkoutBtn}
-          onPress={() => {
+          onPress={async () => {
             if (userId) dispatch(clearCart(userId));
+            
+            try {
+              await notificationService.setup();
+              await notificationService.showNotification(
+                'Order Placed! 🛒',
+                `Your order for ${totalQuantity} items (Total: ₹${totalPrice.toLocaleString()}) has been placed successfully.`
+              );
+            } catch (e) {
+              console.log('Notification error:', e);
+            }
+
             navigation.goBack();
           }}
         >

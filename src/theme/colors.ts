@@ -10,5 +10,6 @@ export default {
   textSecondary: "#64748B",
   border: "#E2E8F0",
   placeholder: "#94A3B8",
-  white: "#FFFFFF"
+  card: "#FFFFFF",
+  white:"white"
 } as const;

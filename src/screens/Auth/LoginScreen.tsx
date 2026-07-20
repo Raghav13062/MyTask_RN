@@ -43,7 +43,7 @@ export default function LoginScreen({ navigation }: any) {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
   
           <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subtitle}>Log in to manage your vendors</Text>
+          <Text style={styles.subtitle}>Log in</Text>
           
           <Input control={control} name="email" label="Email" keyboardType="email-address" />
           <Input control={control} name="password" label="Password" secureTextEntry />
