@@ -14,6 +14,8 @@ import { Button as PaperButton, Surface } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppStatusBar from '@/components/AppStatusBar';
 
+import { authService } from '../../services/auth.service';
+
 export const DUMMY_VENDORS = [
   {
     id: 1,
@@ -134,6 +136,7 @@ export default function HomeScreen({ navigation }: any) {
   const { items: cartItems, totalQuantity, totalPrice } = useSelector((state: RootState) => state.cart);
   
   const [activeVendor, setActiveVendor] = useState<string>('All');
+  const [userEmail, setUserEmail] = useState<string>('');
 
   const allDummyProducts = DUMMY_VENDORS.flatMap(v => v.products.map(p => ({ ...p, vendorName: v.vendorName })));
   const vendorNames = ['All', ...Array.from(new Set(allDummyProducts.map(p => p.vendorName)))];
@@ -145,6 +148,9 @@ export default function HomeScreen({ navigation }: any) {
   const loadStats = async () => {
     if (!userId) return;
     try {
+      const user = await authService.getUserById(userId);
+      setUserEmail(user.email);
+      
       const vendors = await vendorService.getVendorsByUser(userId);
       const projects = await projectService.getAllProjectsByUser(userId);
       const products = await productService.getAllProductsByUser(userId);
@@ -182,7 +188,10 @@ export default function HomeScreen({ navigation }: any) {
     <SafeAreaView style={styles.mainContainer}>
       <AppStatusBar/>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Home Store</Text>
+        <View>
+          <Text style={styles.headerTitle}>Home Store</Text>
+          {userEmail ? <Text style={styles.userEmail}>{userEmail}</Text> : null}
+        </View>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutBtn}>
           <Icon name="logout" size={24} color={colors.danger} />
         </TouchableOpacity>
@@ -295,6 +304,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: colors.primary,
+  },
+  userEmail: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 2,
   },
   logoutBtn: {
     padding: 5,

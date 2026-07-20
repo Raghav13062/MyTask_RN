@@ -14,7 +14,7 @@ export const vendorService = {
     let newVendor: Vendor | undefined;
     await database.write(async () => {
       newVendor = await database.collections.get<Vendor>('vendors').create(vendor => {
-        vendor.user.id = userId;
+        vendor.userId = userId;
         vendor.vendorName = vendorName;
         vendor.address = address;
       });

@@ -41,4 +41,9 @@ export const authService = {
 
     return user;
   },
+
+  async getUserById(userId: string): Promise<User> {
+    const user = await database.collections.get<User>('users').find(userId);
+    return user;
+  }
 };

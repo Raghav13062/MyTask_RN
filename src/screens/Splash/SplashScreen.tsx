@@ -5,7 +5,7 @@ import colors from '../../theme/colors';
 export default function SplashScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>My App</Text>
+      <Text style={styles.title}>Home Store</Text>
       <ActivityIndicator size="large" color={colors.surface} />
     </View>
   );

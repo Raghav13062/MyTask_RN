@@ -27,7 +27,7 @@ export const projectService = {
     let newProject: Project | undefined;
     await database.write(async () => {
       newProject = await database.collections.get<Project>('projects').create(project => {
-        project.vendor.id = vendorId;
+        project.vendorId = vendorId;
         project.projectName = projectName;
         project.description = description;
       });

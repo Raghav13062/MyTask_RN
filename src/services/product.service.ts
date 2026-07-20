@@ -25,8 +25,8 @@ export const productService = {
     let newProduct: Product | undefined;
     await database.write(async () => {
       newProduct = await database.collections.get<Product>('products').create(product => {
-        product.project.id = projectId;
-        product.vendor.id = vendorId;
+        product.projectId = projectId;
+        product.vendorId = vendorId;
         product.productName = productName;
         product.price = price;
         product.description = description;
