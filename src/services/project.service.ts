@@ -11,9 +11,7 @@ export const projectService = {
   },
 
   async getAllProjectsByUser(userId: string): Promise<Project[]> {
-    // Note: WatermelonDB relations can be complex to join across multiple tables.
-    // Assuming we just fetch all and filter, or use raw SQL. For now, we will fetch vendors first.
-    const vendors = await database.collections.get('vendors').query(Q.where('user_id', userId)).fetch();
+     const vendors = await database.collections.get('vendors').query(Q.where('user_id', userId)).fetch();
     const vendorIds = vendors.map(v => v.id);
     if (vendorIds.length === 0) return [];
 

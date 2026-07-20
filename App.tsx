@@ -10,8 +10,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 function App() {
   useEffect(() => {
     
-    // Run the seeder on startup
-    seedDemoData().catch(console.error);
+     seedDemoData().catch(console.error);
   }, []);
 
   return (

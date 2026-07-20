@@ -133,7 +133,12 @@ export default function HomeScreen({ navigation }: any) {
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.auth.userId);
   const { totalVendors, totalProjects, totalProducts } = useSelector((state: RootState) => state.dashboard);
-  const { items: cartItems, totalQuantity, totalPrice } = useSelector((state: RootState) => state.cart);
+  const cartState = useSelector((state: RootState) => state.cart);
+  const activeCart = userId && cartState.userCarts && cartState.userCarts[userId]
+    ? cartState.userCarts[userId]
+    : { items: [], totalQuantity: 0, totalPrice: 0 };
+  
+  const { items: cartItems, totalQuantity, totalPrice } = activeCart;
   
   const [activeVendor, setActiveVendor] = useState<string>('All');
   const [userEmail, setUserEmail] = useState<string>('');
@@ -253,14 +258,14 @@ export default function HomeScreen({ navigation }: any) {
                     <View style={styles.stepperContainer}>
                       <TouchableOpacity 
                         style={styles.stepperBtn} 
-                        onPress={() => dispatch(removeFromCart(product.id))}
+                        onPress={() => dispatch(removeFromCart({ userId, id: product.id }))}
                       >
                         <Icon name="minus" size={20} color={colors.white} />
                       </TouchableOpacity>
                       <Text style={styles.stepperText}>{quantity}</Text>
                       <TouchableOpacity 
                         style={styles.stepperBtn} 
-                        onPress={() => dispatch(addToCart({ id: product.id, productName: product.productName, price: product.price }))}
+                        onPress={() => dispatch(addToCart({ userId, id: product.id, productName: product.productName, price: product.price }))}
                       >
                         <Icon name="plus" size={20} color={colors.white} />
                       </TouchableOpacity>
@@ -271,7 +276,7 @@ export default function HomeScreen({ navigation }: any) {
                       buttonColor={colors.secondary} 
                       compact 
                       style={styles.actionBtn}
-                      onPress={() => dispatch(addToCart({ id: product.id, productName: product.productName, price: product.price }))}
+                      onPress={() => dispatch(addToCart({ userId, id: product.id, productName: product.productName, price: product.price }))}
                     >
                       Add to Cart
                     </PaperButton>

@@ -11,7 +11,14 @@ import AppStatusBar from '@/components/AppStatusBar';
 
 export default function CartScreen({ navigation }: any) {
   const dispatch = useDispatch();
-  const { items, totalQuantity, totalPrice } = useSelector((state: RootState) => state.cart);
+  const userId = useSelector((state: RootState) => state.auth.userId);
+  const cartState = useSelector((state: RootState) => state.cart);
+  
+  const activeCart = userId && cartState.userCarts && cartState.userCarts[userId]
+    ? cartState.userCarts[userId]
+    : { items: [], totalQuantity: 0, totalPrice: 0 };
+  
+  const { items, totalQuantity, totalPrice } = activeCart;
 
   if (items.length === 0) {
     return (
@@ -48,7 +55,7 @@ export default function CartScreen({ navigation }: any) {
           <Icon name="arrow-left" size={24} color={colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>My Cart ({totalQuantity})</Text>
-        <TouchableOpacity onPress={() => dispatch(clearCart())} style={styles.clearBtn}>
+        <TouchableOpacity onPress={() => userId && dispatch(clearCart(userId))} style={styles.clearBtn}>
           <Text style={styles.clearText}>Clear All</Text>
         </TouchableOpacity>
       </View>
@@ -63,14 +70,14 @@ export default function CartScreen({ navigation }: any) {
             <View style={styles.stepperContainer}>
               <TouchableOpacity 
                 style={styles.stepperBtn} 
-                onPress={() => dispatch(removeFromCart(item.id))}
+                onPress={() => userId && dispatch(removeFromCart({ userId, id: item.id }))}
               >
                 <Icon name="minus" size={20} color={colors.white} />
               </TouchableOpacity>
               <Text style={styles.stepperText}>{item.quantity}</Text>
               <TouchableOpacity 
                 style={styles.stepperBtn} 
-                onPress={() => dispatch(addToCart({ id: item.id, productName: item.productName, price: item.price }))}
+                onPress={() => userId && dispatch(addToCart({ userId, id: item.id, productName: item.productName, price: item.price }))}
               >
                 <Icon name="plus" size={20} color={colors.white} />
               </TouchableOpacity>
@@ -94,7 +101,7 @@ export default function CartScreen({ navigation }: any) {
           buttonColor={colors.secondary} 
           style={styles.checkoutBtn}
           onPress={() => {
-            dispatch(clearCart());
+            if (userId) dispatch(clearCart(userId));
             navigation.goBack();
           }}
         >
@@ -121,8 +128,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     backgroundColor: colors.surface,
-    elevation: 2,
-  },
+    marginTop:20
+   },
   backBtn: {
     padding: 5,
   },

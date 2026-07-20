@@ -11,8 +11,7 @@ export default function RootNavigator() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate some loading if needed, e.g., checking initial tokens or seeding db
-    setTimeout(() => setLoading(false), 1000);
+     setTimeout(() => setLoading(false), 1000);
   }, []);
 
   if (loading) {

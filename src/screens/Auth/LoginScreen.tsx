@@ -11,8 +11,7 @@ import { authService } from '../../services/auth.service';
 import colors from '../../theme/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Snackbar, Surface } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+ 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
   password: yup.string().required('Password is required'),
